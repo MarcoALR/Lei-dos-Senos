@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"> <!-- Define a codificação de caracteres como UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsivo para diferentes tamanhos de tela -->
+  <title>Calculadora de Triângulo - Lei dos Senos</title> <!-- Título da página -->
+  <style>
+    /* Estilos gerais do corpo da página */
+    body {
+      font-family: 'Arial', sans-serif; /* Fonte usada na página */
+      display: flex; /* Usado para centralizar o conteúdo */
+      background-image: url("https://realizeeducacao.com.br/wp-content/uploads/2021/07/lei-dos-senos-848x480.png"); /* Imagem de fundo */
+      justify-content: center; /* Centraliza horizontalmente */
+      align-items: center; /* Centraliza verticalmente */
+      height: 100vh; /* Altura da tela inteira */
+      margin: 0; /* Remove margens padrão */
+      background-color: #f0f0f0; /* Cor de fundo alternativa */
+    }
+    /* Estilo do contêiner da calculadora */
+    .container {
+      background-color: #000000bb; /* Fundo semi-transparente */
+      padding: 30px; /* Espaçamento interno */
+      border-radius: 10px; /* Bordas arredondadas */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra do contêiner */
+      width: 350px; /* Largura fixa */
+      text-align: center; /* Centraliza texto dentro do contêiner */
+      transition: transform 0.3s, box-shadow 0.3s; /* Transição suave para hover */
+    }
+    /* Efeito de hover no contêiner */
+    .container:hover {
+      transform: scale(1.05); /* Aumenta levemente o tamanho */
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Aumenta a sombra */
+    }
+    /* Estilo do título */
+    .container h1 {
+      font-size: 1.8em; /* Tamanho da fonte */
+      margin-bottom: 20px; /* Espaço abaixo do título */
+      color: #ffffff; /* Cor do texto */
+      transition: color 0.3s; /* Transição de cor ao passar o mouse */
+    }
+    /* Efeito de hover no título */
+    .container:hover h1 {
+      color: #ffffffbb; /* Tona o texto mais claro */
+    }
+    /* Estilo dos grupos de entrada */
+    .input-group {
+      margin-bottom: 15px; /* Espaço abaixo de cada grupo de entrada */
+      transition: transform 0.3s; /* Transição para efeito */
+    }
+    /* Estilo dos rótulos das entradas */
+    .input-group label {
+      display: block; /* Exibe o rótulo como bloco */
+      font-weight: bold; /* Texto em negrito */
+      margin-bottom: 10px; /* Espaço abaixo do rótulo */
+      color: #ffffff; /* Cor do texto */
+      transition: color 0.3s; /* Transição de cor ao passar o mouse */
+    }
+    /* Estilo dos campos de entrada */
+    .input-group input {
+      width: 90%; /* Largura do campo */
+      padding: 10px; /* Espaçamento interno */
+      border: 1px solid #ccc; /* Borda cinza clara */
+      border-radius: 5px; /* Bordas arredondadas */
+      font-size: 1em; /* Tamanho da fonte */
+      transition: border-color 0.2s, box-shadow 0.2s; /* Transição para foco */
+    }
+    /* Estilo do campo de entrada quando em foco */
+    .input-group input:focus {
+      border-color: #a35f32f8; /* Cor da borda quando em foco */
+      outline: none; /* Remove o contorno padrão */
+      box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); /* Sombra ao redor do campo */
+    }
+    /* Estilo do botão */
+    .button {
+      background-color: #a35f32f8; /* Cor de fundo do botão */
+      color: white; /* Cor do texto */
+      padding: 12px 0; /* Espaçamento interno */
+      border: none; /* Remove borda padrão */
+      border-radius: 5px; /* Bordas arredondadas */
+      cursor: pointer; /* Indica que é clicável */
+      font-size: 1.1em; /* Tamanho da fonte */
+      width: 100%; /* Largura total do botão */
+      transition: background-color 0.3s, transform 0.3s; /* Transição suave */
+    }
+    /* Efeito de hover no botão */
+    .button:hover {
+      background-color: #a35f32f8; /* Mantém a mesma cor (pode alterar para outra) */
+      transform: translateY(-2px); /* Move o botão para cima */
+    }
+    /* Estilo do resultado */
+    .result {
+      margin-top: 20px; /* Espaço acima do resultado */
+      font-weight: bold; /* Texto em negrito */
+      color: #ffffff; /* Cor do texto */
+      transition: opacity 0.3s; /* Transição de opacidade */
+      opacity: 0; /* Inicialmente invisível */
+    }
+    /* Classe para tornar o resultado visível */
+    .result.visible {
+      opacity: 1; /* Torna o resultado visível */
+    }
+    /* Estilo dos spans dentro do resultado */
+    .result span {
+      display: block; /* Cada resultado em linha separada */
+      color: #ccc; /* Cor do texto */
+      margin: 5px 0; /* Espaçamento vertical */
+    }
+  </style>
+</head>
+<body>
+
+<div class="container"> <!-- Contêiner principal da calculadora -->
+  <h1>Calculadora de Triângulo</h1> <!-- Título da calculadora -->
+  <div class="input-group"> <!-- Grupo de entrada para o ângulo 1 -->
+    <label for="angle1">Ângulo 1 (em graus):</label> <!-- Rótulo do campo -->
+    <input type="number" id="angle1" placeholder="Digite o primeiro ângulo" required> <!-- Campo de entrada -->
+  </div>
+  <div class="input-group"> <!-- Grupo de entrada para o ângulo 2 -->
+    <label for="angle2">Ângulo 2 (em graus):</label> <!-- Rótulo do campo -->
+    <input type="number" id="angle2" placeholder="Digite o segundo ângulo" required> <!-- Campo de entrada -->
+  </div>
+  <div class="input-group"> <!-- Grupo de entrada para o lado oposto ao ângulo 1 -->
+    <label for="side">Comprimento do lado oposto ao Ângulo 1:</label> <!-- Rótulo do campo -->
+    <input type="number" id="side" placeholder="Digite o comprimento do lado" required> <!-- Campo de entrada -->
+  </div>
+  <button class="button" onclick="calculateTriangle()">Calcular</button> <!-- Botão para calcular -->
+  <div class="result" id="result"></div> <!-- Div para exibir resultados -->
+</div>
+
+<script>
+  // Função para calcular os valores do triângulo
+  function calculateTriangle() {
+    // Obtém os valores inseridos pelo usuário
+    const angle1 = parseFloat(document.getElementById('angle1').value);
+    const angle2 = parseFloat(document.getElementById('angle2').value);
+    const side = parseFloat(document.getElementById('side').value);
+
+    // Valida se os campos foram preenchidos corretamente
+    if (isNaN(angle1) || isNaN(angle2) || isNaN(side) || angle1 <= 0 || angle2 <= 0) {
+      document.getElementById('result').innerText = "Por favor, preencha todos os campos corretamente."; // Mensagem de erro
+      document.getElementById('result').classList.remove('visible'); // Oculta resultados
+      return; // Sai da função
+    }
+
+    // Calcula o terceiro ângulo
+    const angle3 = 180 - (angle1 + angle2);
+
+    // Verifica se a soma dos ângulos é válida
+    if (angle3 <= 0) {
+      document.getElementById('result').innerText = "A soma dos ângulos deve ser menor que 180°."; // Mensagem de erro
+      document.getElementById('result').classList.remove('visible'); // Oculta resultados
+      return; // Sai da função
+    }
+
+    // Calcula os lados opostos usando a Lei dos Senos
+    const side2 = (side * Math.sin(toRadians(angle2))) / Math.sin(toRadians(angle1));
+    const side3 = (side * Math.sin(toRadians(angle3))) / Math.sin(toRadians(angle1));
+
+    // Exibe os resultados
+    document.getElementById('result').innerHTML = `
+      <span>Ângulo 3: ${angle3.toFixed(2)}°</span> <!-- Exibe o valor do terceiro ângulo -->
+      <span>Lado oposto ao Ângulo 2: ${side2.toFixed(2)}</span> <!-- Exibe o lado oposto ao ângulo 2 -->
+      <span>Lado oposto ao Ângulo 3: ${side3.toFixed(2)}</span> <!-- Exibe o lado oposto ao ângulo 3 -->
+    `;
+
+    // Adiciona a classe 'visible' para tornar o resultado visível
+    document.getElementById('result').classList.add('visible'); 
+  }
+
+  // Função para converter graus em radianos
+  function toRadians(degrees) {
+    return degrees * (Math.PI / 180); // Converte graus para radianos
+  }
+</script>
+
+</body>
+</html>
